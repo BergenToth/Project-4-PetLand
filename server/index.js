@@ -1,7 +1,3 @@
-/**
- * Beginner Express + MySQL API.
- * Uses cookie sessions (simpler than JWT).
- */
 
 import express from "express";
 import cors from "cors";
@@ -9,6 +5,8 @@ import session from "express-session";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import mysql from "mysql2/promise";
+import path from "path";
+
 
 dotenv.config();
 
@@ -276,4 +274,10 @@ app.post("/api/questions/:id/answers", requireLogin, async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+});
+
+app.use(express.static("public"));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve("public", "index.html"));
 });
